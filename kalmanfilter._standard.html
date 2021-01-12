@@ -1,0 +1,265 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
+
+    <meta name="generator" content="sphinx-3.4.3, furo 2020.12.30.beta24"/>
+        <title>kalmanfilter._standard module - kalmanfilter documentation</title>
+      <link rel="stylesheet" href="_static/styles/furo.css?digest=33d2fc4f3f180ec1ffc6524e273e21d7d58cbe49">
+    <link rel="stylesheet" href="_static/pygments.css">
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css">
+    
+
+
+<style>
+  :root {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+
+  /* For allowing end-user-specific overrides */
+  .override-light {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  .override-dark {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+</style><link rel="stylesheet" href="_static/styles/furo-extensions.css?digest=26485485040e7aaf717c13fd0188a5ad2c2deb60">
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script defer="defer" src="_static/jquery.js"></script>
+    <script defer="defer" src="_static/underscore.js"></script>
+    <script defer="defer" src="_static/doctools.js"></script>
+    <script defer src="_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></head>
+  <body dir="">
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z"/>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">kalmanfilter  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">kalmanfilter  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html">
+  <input class="sidebar-search" placeholder=Search name="q">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form><div class="sidebar-scroll"><div class="sidebar-tree">
+  
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <article role="main">
+        <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+        </label>
+        <div class="section" id="module-kalmanfilter._standard">
+<span id="kalmanfilter-standard-module"></span><h1>kalmanfilter._standard module<a class="headerlink" href="#module-kalmanfilter._standard" title="Permalink to this headline">¶</a></h1>
+<p>Vanilla implementation of Kalman Filter</p>
+<dl class="py class">
+<dt id="kalmanfilter._standard.KalmanFilter">
+<em class="property">class </em><code class="sig-prename descclassname">kalmanfilter._standard.</code><code class="sig-name descname">KalmanFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">A</span></em>, <em class="sig-param"><span class="n">xk</span></em>, <em class="sig-param"><span class="n">B</span></em>, <em class="sig-param"><span class="n">u</span></em>, <em class="sig-param"><span class="n">Pk</span></em>, <em class="sig-param"><span class="n">H</span></em>, <em class="sig-param"><span class="n">Q</span></em>, <em class="sig-param"><span class="n">R</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kalmanfilter/_standard.html#KalmanFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Kalman filter.</p>
+<p>Applies the Kalman filter algorithm. See 2nd and 3rd references to
+understand notation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A</strong> (<em>numpy.array</em>) – Transition matrix. A matrix that relates the state at the previous time
+step k-1 to the state at the current step k.</p></li>
+<li><p><strong>xk</strong> (<em>numpy.array</em>) – Initial (k=0) mean estimate.</p></li>
+<li><p><strong>B</strong> (<em>numpy.array</em>) – Control-input matrix.</p></li>
+<li><p><strong>u</strong> (<em>numpy.array</em>) – Control-input vector.</p></li>
+<li><p><strong>Pk</strong> (<em>numpy.array</em>) – Initial (k=0) covariance estimate.</p></li>
+<li><p><strong>H</strong> (<em>numpy.array</em>) – Observation matrix. A matrix that relates the state to the measurement
+zk.</p></li>
+<li><p><strong>Q</strong> (<em>numpy.array</em>) – Process noise covariance.</p></li>
+<li><p><strong>R</strong> (<em>numpy.array</em>) – Measurement noise covariance.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="kalmanfilter._standard.KalmanFilter.state_size">
+<code class="sig-name descname">state_size</code><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter.state_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dimensionality of the state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>states</strong> (<em>numpy.array</em>) – A posteriori state estimates for each time step.</p></li>
+<li><p><strong>errors</strong> (<em>numpy.array</em>) – A posteriori estimate error covariances for each time step.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id1"><span class="brackets">1</span></dt>
+<dd><p>Matlab - Understanding Kalman Filters:
+<a class="reference external" href="https://www.youtube.com/playlist?list=PLn8PRpmsu08pzi6EMiYnR-076Mh-q3tWr">https://www.youtube.com/playlist?list=PLn8PRpmsu08pzi6EMiYnR-076Mh-q3tWr</a></p>
+</dd>
+<dt class="label" id="id2"><span class="brackets">2</span></dt>
+<dd><p>Bilgin’s Blog - Kalman filter for dummies.
+<a class="reference external" href="http://bilgin.esme.org/BitsAndBytes/KalmanFilterforDummies">http://bilgin.esme.org/BitsAndBytes/KalmanFilterforDummies</a></p>
+</dd>
+<dt class="label" id="id3"><span class="brackets">3</span></dt>
+<dd><p>Greg Welch, Gary Bishop - An Introduction to the Kalman Filter:
+<a class="reference external" href="https://www.cs.unc.edu/~welch/media/pdf/kalman_intro.pdf">https://www.cs.unc.edu/~welch/media/pdf/kalman_intro.pdf</a></p>
+</dd>
+<dt class="label" id="id4"><span class="brackets">4</span></dt>
+<dd><p>Tucker McClure - How Kalman Filters Work, Part 1
+<a class="reference external" href="http://www.anuncommonlab.com/articles/how-kalman-filters-work/">http://www.anuncommonlab.com/articles/how-kalman-filters-work/</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="kalmanfilter._standard.KalmanFilter.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kalmanfilter/_standard.html#KalmanFilter.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicts states and covariances.</p>
+<p>Predict step of the Kalman filter. Computes the prior values of state
+and covariance using the previous timestep (if any).</p>
+</dd></dl>
+<dl class="py method">
+<dt id="kalmanfilter._standard.KalmanFilter.run_filter">
+<code class="sig-name descname">run_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Z</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kalmanfilter/_standard.html#KalmanFilter.run_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter.run_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs filter over Z.</p>
+<p>Applies the filtering process over Z and returns all errors and
+covariances. That is: given Z, this functions apply the predict and
+update feedback loop for each zk, where k is a timestamp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Z</strong> (<em>numpy.array</em>) – Observed variable</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>states</strong> (<em>numpy.array</em>) – A posteriori state estimates for each time step k.</p></li>
+<li><p><strong>errors</strong> (<em>numpy.array</em>) – A posteriori estimate error covariances for each time step k.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="kalmanfilter._standard.KalmanFilter.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">zk</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kalmanfilter/_standard.html#KalmanFilter.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates states and covariances.</p>
+<p>Update step of the Kalman filter. That is, the filter combines the
+predictions with the observed variable Z at time k.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>zk</strong> (<em>numpy.array</em>) – Observed variable at time k.</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+</div>
+
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021, Alejandro PS
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            |
+            <a class="muted-link" href="_sources/kalmanfilter._standard.rst.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </main>
+</div>
+  </body>
+</html>
