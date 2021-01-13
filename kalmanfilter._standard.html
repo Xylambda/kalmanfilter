@@ -138,17 +138,24 @@ understand notation.</p>
 stages to model dynamic linear systems:</p>
 <p>Predict step
 .. math:</p>
-<dl class="simple">
-<dt>egin{matrix}</dt><dd><p>hat{x}_{k}^{-} = Ahat{x}_{k-1}^{-} + B u_{k-1} P_{k}^{-} = AP_{k-1}A^{T} + Q</p>
-</dd>
-</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">begin</span><span class="p">{</span><span class="n">matrix</span><span class="p">}</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>hat{x}_{k}^{-} = Ahat{x}_{k-1}^{-} + B u_{k-1} \
+P_{k}^{-} = AP_{k-1}A^{T} + Q</p>
+</div></blockquote>
 <p>end{matrix}</p>
 <p>Update step
 .. math:</p>
-<dl class="simple">
-<dt>egin{matrix}</dt><dd><p>K_k = P_{k}^{-} H^{T} (H P_{k}^{-} H^{T} + R)^{-1} hat{x_{k}} = hat{x}_{k}^{-} + K_k (z_k - H hat{x}_{k}^{-})) P_k = (I - K_k H) P_{k}^{-}</p>
-</dd>
-</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">begin</span><span class="p">{</span><span class="n">matrix</span><span class="p">}</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>K_k = P_{k}^{-} H^{T} (H P_{k}^{-} H^{T} + R)^{-1} \
+hat{x_{k}} = hat{x}_{k}^{-} + K_k (z_k - H hat{x}_{k}^{-})) \
+P_k = (I - K_k H) P_{k}^{-}</p>
+</div></blockquote>
 <p>end{matrix}</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
