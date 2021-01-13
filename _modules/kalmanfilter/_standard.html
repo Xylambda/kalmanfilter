@@ -134,6 +134,26 @@
 <span class="sd">    </span>
 <span class="sd">    Applies the Kalman filter algorithm. See 2nd and 3rd references to </span>
 <span class="sd">    understand notation.</span>
+
+<span class="sd">    The standard Kalman Filter uses a form of feedback-control loop of two</span>
+<span class="sd">    stages to model dynamic linear systems:</span>
+
+<span class="sd">    Predict step</span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">    \begin{matrix}</span>
+<span class="sd">        \hat{x}_{k}^{-} = A\hat{x}_{k-1}^{-} + B u_{k-1} \\ </span>
+<span class="sd">        P_{k}^{-} = AP_{k-1}A^{T} + Q</span>
+<span class="sd">    \end{matrix}</span>
+
+<span class="sd">    Update step</span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">    \begin{matrix}</span>
+<span class="sd">        K_k = P_{k}^{-} H^{T} (H P_{k}^{-} H^{T} + R)^{-1} \\ </span>
+<span class="sd">        \hat{x_{k}} = \hat{x}_{k}^{-} + K_k (z_k - H \hat{x}_{k}^{-})) \\ </span>
+<span class="sd">        P_k = (I - K_k H) P_{k}^{-}</span>
+<span class="sd">    \end{matrix}</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -144,22 +164,22 @@
 <span class="sd">        Initial (k=0) mean estimate.</span>
 <span class="sd">    B : numpy.array</span>
 <span class="sd">        Control-input matrix.</span>
-<span class="sd">    u : numpy.array</span>
-<span class="sd">        Control-input vector.</span>
 <span class="sd">    Pk : numpy.array</span>
 <span class="sd">        Initial (k=0) covariance estimate.</span>
 <span class="sd">    H : numpy.array</span>
 <span class="sd">        Observation matrix. A matrix that relates the state to the measurement </span>
 <span class="sd">        zk.</span>
-<span class="sd">    Q : numpy.array</span>
+<span class="sd">    Q : numpy.array or float.</span>
 <span class="sd">        Process noise covariance.</span>
-<span class="sd">    R : numpy.array</span>
+<span class="sd">    R : numpy.array or float.</span>
 <span class="sd">        Measurement noise covariance.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    state_size : int</span>
-<span class="sd">        Dimensionality of the state.</span>
+<span class="sd">        Dimensionality of the state (n).</span>
+<span class="sd">    I : numpy.array</span>
+<span class="sd">        Identity matrix (n x n).</span>
 <span class="sd">        </span>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -179,15 +199,18 @@
 <span class="sd">    .. [3] Greg Welch, Gary Bishop - An Introduction to the Kalman Filter:</span>
 <span class="sd">       https://www.cs.unc.edu/~welch/media/pdf/kalman_intro.pdf</span>
 <span class="sd">       </span>
-<span class="sd">    .. [4] Tucker McClure - How Kalman Filters Work, Part 1</span>
+<span class="sd">    .. [4] Tucker McClure - How Kalman Filters Work, Part 1.</span>
 <span class="sd">       http://www.anuncommonlab.com/articles/how-kalman-filters-work/</span>
+
+<span class="sd">    .. [5] Matthew B. Rhudy, Roger A. Salguero and Keaton Holappa - A Kalman </span>
+<span class="sd">       Filtering Tutorial for Undergraduate students.</span>
+<span class="sd">       https://aircconline.com/ijcses/V8N1/8117ijcses01.pdf</span>
 <span class="sd">    </span>
 <span class="sd">    """</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">xk</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">Pk</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">xk</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">Pk</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">A</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">xk</span> <span class="o">=</span> <span class="n">xk</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">B</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="n">u</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Pk</span> <span class="o">=</span> <span class="n">Pk</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="o">=</span> <span class="n">H</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span>
@@ -195,15 +218,21 @@
 
         <span class="c1"># attributes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xk</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># usually called 'n'</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_size</span><span class="p">)</span>
 
-<div class="viewcode-block" id="KalmanFilter.predict"><a class="viewcode-back" href="../../kalmanfilter._standard.html#kalmanfilter._standard.KalmanFilter.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="KalmanFilter.predict"><a class="viewcode-back" href="../../kalmanfilter._standard.html#kalmanfilter._standard.KalmanFilter.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uk</span><span class="p">):</span>
         <span class="sd">"""Predicts states and covariances.</span>
 <span class="sd">        </span>
 <span class="sd">        Predict step of the Kalman filter. Computes the prior values of state </span>
 <span class="sd">        and covariance using the previous timestep (if any).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        uk : numpy.array</span>
+<span class="sd">            Control-input vector at time k.</span>
 <span class="sd">        """</span>        
         <span class="c1"># project state ahead</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">xk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xk</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xk</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">uk</span><span class="p">)</span>
         
         <span class="c1"># project error covariance ahead</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Pk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Pk</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span></div>
@@ -229,10 +258,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">xk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xk</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">Kk</span><span class="p">,</span> <span class="n">zk</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xk</span><span class="p">))</span>
         
         <span class="c1"># update error covariance</span>
-        <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_size</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Pk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">I</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">Kk</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">Pk</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Pk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">I</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">Kk</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">Pk</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="KalmanFilter.run_filter"><a class="viewcode-back" href="../../kalmanfilter._standard.html#kalmanfilter._standard.KalmanFilter.run_filter">[docs]</a>    <span class="k">def</span> <span class="nf">run_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
+<div class="viewcode-block" id="KalmanFilter.run_filter"><a class="viewcode-back" href="../../kalmanfilter._standard.html#kalmanfilter._standard.KalmanFilter.run_filter">[docs]</a>    <span class="k">def</span> <span class="nf">run_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">U</span><span class="p">):</span>
         <span class="sd">"""Runs filter over Z.</span>
 <span class="sd">        </span>
 <span class="sd">        Applies the filtering process over Z and returns all errors and </span>
@@ -243,7 +271,9 @@
 <span class="sd">        ----------</span>
 <span class="sd">        Z : numpy.array</span>
 <span class="sd">            Observed variable</span>
-<span class="sd">            </span>
+<span class="sd">        U : numpy.array</span>
+<span class="sd">            Control-input vector.</span>
+<span class="sd">        </span>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        states : numpy.array</span>
@@ -254,8 +284,8 @@
         <span class="n">states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
         <span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
         
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">zk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Z</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">zk</span><span class="p">,</span> <span class="n">uk</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">U</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">uk</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">zk</span><span class="p">)</span>
             
             <span class="n">states</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xk</span>

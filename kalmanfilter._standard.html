@@ -129,11 +129,27 @@
 <p>Vanilla implementation of Kalman Filter</p>
 <dl class="py class">
 <dt id="kalmanfilter._standard.KalmanFilter">
-<em class="property">class </em><code class="sig-prename descclassname">kalmanfilter._standard.</code><code class="sig-name descname">KalmanFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">A</span></em>, <em class="sig-param"><span class="n">xk</span></em>, <em class="sig-param"><span class="n">B</span></em>, <em class="sig-param"><span class="n">u</span></em>, <em class="sig-param"><span class="n">Pk</span></em>, <em class="sig-param"><span class="n">H</span></em>, <em class="sig-param"><span class="n">Q</span></em>, <em class="sig-param"><span class="n">R</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kalmanfilter/_standard.html#KalmanFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">kalmanfilter._standard.</code><code class="sig-name descname">KalmanFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">A</span></em>, <em class="sig-param"><span class="n">xk</span></em>, <em class="sig-param"><span class="n">B</span></em>, <em class="sig-param"><span class="n">Pk</span></em>, <em class="sig-param"><span class="n">H</span></em>, <em class="sig-param"><span class="n">Q</span></em>, <em class="sig-param"><span class="n">R</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kalmanfilter/_standard.html#KalmanFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Kalman filter.</p>
 <p>Applies the Kalman filter algorithm. See 2nd and 3rd references to
 understand notation.</p>
+<p>The standard Kalman Filter uses a form of feedback-control loop of two
+stages to model dynamic linear systems:</p>
+<p>Predict step
+.. math:</p>
+<dl class="simple">
+<dt>egin{matrix}</dt><dd><p>hat{x}_{k}^{-} = Ahat{x}_{k-1}^{-} + B u_{k-1} P_{k}^{-} = AP_{k-1}A^{T} + Q</p>
+</dd>
+</dl>
+<p>end{matrix}</p>
+<p>Update step
+.. math:</p>
+<dl class="simple">
+<dt>egin{matrix}</dt><dd><p>K_k = P_{k}^{-} H^{T} (H P_{k}^{-} H^{T} + R)^{-1} hat{x_{k}} = hat{x}_{k}^{-} + K_k (z_k - H hat{x}_{k}^{-})) P_k = (I - K_k H) P_{k}^{-}</p>
+</dd>
+</dl>
+<p>end{matrix}</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -141,22 +157,31 @@ understand notation.</p>
 step k-1 to the state at the current step k.</p></li>
 <li><p><strong>xk</strong> (<em>numpy.array</em>) – Initial (k=0) mean estimate.</p></li>
 <li><p><strong>B</strong> (<em>numpy.array</em>) – Control-input matrix.</p></li>
-<li><p><strong>u</strong> (<em>numpy.array</em>) – Control-input vector.</p></li>
 <li><p><strong>Pk</strong> (<em>numpy.array</em>) – Initial (k=0) covariance estimate.</p></li>
 <li><p><strong>H</strong> (<em>numpy.array</em>) – Observation matrix. A matrix that relates the state to the measurement
 zk.</p></li>
-<li><p><strong>Q</strong> (<em>numpy.array</em>) – Process noise covariance.</p></li>
-<li><p><strong>R</strong> (<em>numpy.array</em>) – Measurement noise covariance.</p></li>
+<li><p><strong>Q</strong> (<em>numpy.array</em><em> or </em><em>float.</em>) – Process noise covariance.</p></li>
+<li><p><strong>R</strong> (<em>numpy.array</em><em> or </em><em>float.</em>) – Measurement noise covariance.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt id="kalmanfilter._standard.KalmanFilter.state_size">
 <code class="sig-name descname">state_size</code><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter.state_size" title="Permalink to this definition">¶</a></dt>
-<dd><p>Dimensionality of the state.</p>
+<dd><p>Dimensionality of the state (n).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt id="kalmanfilter._standard.KalmanFilter.I">
+<code class="sig-name descname">I</code><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter.I" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identity matrix (n x n).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy.array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -184,27 +209,40 @@ zk.</p></li>
 <a class="reference external" href="https://www.cs.unc.edu/~welch/media/pdf/kalman_intro.pdf">https://www.cs.unc.edu/~welch/media/pdf/kalman_intro.pdf</a></p>
 </dd>
 <dt class="label" id="id4"><span class="brackets">4</span></dt>
-<dd><p>Tucker McClure - How Kalman Filters Work, Part 1
+<dd><p>Tucker McClure - How Kalman Filters Work, Part 1.
 <a class="reference external" href="http://www.anuncommonlab.com/articles/how-kalman-filters-work/">http://www.anuncommonlab.com/articles/how-kalman-filters-work/</a></p>
+</dd>
+<dt class="label" id="id5"><span class="brackets">5</span></dt>
+<dd><p>Matthew B. Rhudy, Roger A. Salguero and Keaton Holappa - A Kalman
+Filtering Tutorial for Undergraduate students.
+<a class="reference external" href="https://aircconline.com/ijcses/V8N1/8117ijcses01.pdf">https://aircconline.com/ijcses/V8N1/8117ijcses01.pdf</a></p>
 </dd>
 </dl>
 <dl class="py method">
 <dt id="kalmanfilter._standard.KalmanFilter.predict">
-<code class="sig-name descname">predict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kalmanfilter/_standard.html#KalmanFilter.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter.predict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uk</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kalmanfilter/_standard.html#KalmanFilter.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predicts states and covariances.</p>
 <p>Predict step of the Kalman filter. Computes the prior values of state
 and covariance using the previous timestep (if any).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>uk</strong> (<em>numpy.array</em>) – Control-input vector at time k.</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt id="kalmanfilter._standard.KalmanFilter.run_filter">
-<code class="sig-name descname">run_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Z</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kalmanfilter/_standard.html#KalmanFilter.run_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter.run_filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Z</span></em>, <em class="sig-param"><span class="n">U</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kalmanfilter/_standard.html#KalmanFilter.run_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter.run_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs filter over Z.</p>
 <p>Applies the filtering process over Z and returns all errors and
 covariances. That is: given Z, this functions apply the predict and
 update feedback loop for each zk, where k is a timestamp.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>Z</strong> (<em>numpy.array</em>) – Observed variable</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Z</strong> (<em>numpy.array</em>) – Observed variable</p></li>
+<li><p><strong>U</strong> (<em>numpy.array</em>) – Control-input vector.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
