@@ -41,6 +41,7 @@
     <script defer="defer" src="../../_static/jquery.js"></script>
     <script defer="defer" src="../../_static/underscore.js"></script>
     <script defer="defer" src="../../_static/doctools.js"></script>
+    <script async="async" defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script defer src="../../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></head>
   <body dir="">
     
@@ -111,7 +112,18 @@
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form><div class="sidebar-scroll"><div class="sidebar-tree">
-  
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api.html">API reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../kalmanfilter.html">kalmanfilter package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../kalmanfilter._standard.html">kalmanfilter._standard module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
 </div>
 </div>
       </div>
@@ -130,30 +142,36 @@
 
 
 <div class="viewcode-block" id="KalmanFilter"><a class="viewcode-back" href="../../kalmanfilter._standard.html#kalmanfilter._standard.KalmanFilter">[docs]</a><span class="k">class</span> <span class="nc">KalmanFilter</span><span class="p">:</span>
-    <span class="sd">"""Kalman filter.</span>
-<span class="sd">    </span>
-<span class="sd">    Applies the Kalman filter algorithm. See 2nd and 3rd references to </span>
-<span class="sd">    understand notation.</span>
+    <span class="sd">"""Applies the Kalman filter algorithm.</span>
 
 <span class="sd">    The standard Kalman Filter uses a form of feedback-control loop of two</span>
-<span class="sd">    stages to model dynamic linear systems:</span>
+<span class="sd">    stages to model dynamic linear systems. </span>
+<span class="sd">    </span>
+<span class="sd">    For each time step :math:`k`</span>
 
-<span class="sd">    Predict step</span>
+<span class="sd">    1. Predict step</span>
+
 <span class="sd">    .. math::</span>
 
-<span class="sd">    \\begin{matrix}</span>
-<span class="sd">        \\hat{x}_{k}^{-} = A \\hat{x}_{k-1}^{-} + B u_{k-1} \\ </span>
+<span class="sd">        \hat{x}_{k}^{-} = A \hat{x}_{k-1}^{-} + B u_{k-1}</span>
+
+<span class="sd">    .. math::</span>
 <span class="sd">        P_{k}^{-} = AP_{k-1}A^{T} + Q</span>
-<span class="sd">    \\end{matrix}</span>
 
-<span class="sd">    Update step</span>
+<span class="sd">    2. Update step</span>
+
 <span class="sd">    .. math::</span>
 
-<span class="sd">    \\begin{matrix}</span>
-<span class="sd">        K_k = P_{k}^{-} H^{T} (H P_{k}^{-} H^{T} + R)^{-1} \\ </span>
-<span class="sd">        \\hat{x_{k}} = \\hat{x}_{k}^{-} + K_k (z_k - H \\hat{x}_{k}^{-})) \\ </span>
+<span class="sd">        K_k = P_{k}^{-} H^{T} (H P_{k}^{-} H^{T} + R)^{-1}</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \hat{x_{k}} = \hat{x}_{k}^{-} + K_k (z_k - H \hat{x}_{k}^{-})</span>
+<span class="sd">        </span>
+<span class="sd">    .. math::</span>
 <span class="sd">        P_k = (I - K_k H) P_{k}^{-}</span>
-<span class="sd">    \\end{matrix}</span>
+
+<span class="sd">    See 2nd and 3rd references to understand notation.</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>

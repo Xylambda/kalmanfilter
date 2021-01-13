@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js">
   <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="kalmanfilter package" href="kalmanfilter.html" />
 
     <meta name="generator" content="sphinx-3.4.3, furo 2020.12.30.beta24"/>
         <title>kalmanfilter._standard module - kalmanfilter documentation</title>
@@ -41,6 +41,7 @@
     <script defer="defer" src="_static/jquery.js"></script>
     <script defer="defer" src="_static/underscore.js"></script>
     <script defer="defer" src="_static/doctools.js"></script>
+    <script async="async" defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script defer src="_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></head>
   <body dir="">
     
@@ -111,7 +112,18 @@
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form><div class="sidebar-scroll"><div class="sidebar-tree">
-  
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="api.html">API reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="kalmanfilter.html">kalmanfilter package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">kalmanfilter._standard module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
 </div>
 </div>
       </div>
@@ -131,29 +143,27 @@
 <dt id="kalmanfilter._standard.KalmanFilter">
 <em class="property">class </em><code class="sig-prename descclassname">kalmanfilter._standard.</code><code class="sig-name descname">KalmanFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">A</span></em>, <em class="sig-param"><span class="n">xk</span></em>, <em class="sig-param"><span class="n">B</span></em>, <em class="sig-param"><span class="n">Pk</span></em>, <em class="sig-param"><span class="n">H</span></em>, <em class="sig-param"><span class="n">Q</span></em>, <em class="sig-param"><span class="n">R</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kalmanfilter/_standard.html#KalmanFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kalmanfilter._standard.KalmanFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Kalman filter.</p>
-<p>Applies the Kalman filter algorithm. See 2nd and 3rd references to
-understand notation.</p>
+<p>Applies the Kalman filter algorithm.</p>
 <p>The standard Kalman Filter uses a form of feedback-control loop of two
-stages to model dynamic linear systems:</p>
-<p>Predict step
-.. math:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">begin</span><span class="p">{</span><span class="n">matrix</span><span class="p">}</span>
-</pre></div>
-</div>
-<blockquote>
-<div><p>hat{x}_{k}^{-} = A hat{x}_{k-1}^{-} + B u_{k-1} P_{k}^{-} = AP_{k-1}A^{T} + Q</p>
-</div></blockquote>
-<p>end{matrix}</p>
-<p>Update step
-.. math:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">begin</span><span class="p">{</span><span class="n">matrix</span><span class="p">}</span>
-</pre></div>
-</div>
-<blockquote>
-<div><p>K_k = P_{k}^{-} H^{T} (H P_{k}^{-} H^{T} + R)^{-1} hat{x_{k}} = hat{x}_{k}^{-} + K_k (z_k - H hat{x}_{k}^{-})) P_k = (I - K_k H) P_{k}^{-}</p>
-</div></blockquote>
-<p>end{matrix}</p>
+stages to model dynamic linear systems.</p>
+<p>For each time step <span class="math notranslate nohighlight">\(k\)</span></p>
+<ol class="arabic simple">
+<li><p>Predict step</p></li>
+</ol>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\hat{x}_{k}^{-} = A \hat{x}_{k-1}^{-} + B u_{k-1}\]</div></div>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[P_{k}^{-} = AP_{k-1}A^{T} + Q\]</div></div>
+<ol class="arabic simple" start="2">
+<li><p>Update step</p></li>
+</ol>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[K_k = P_{k}^{-} H^{T} (H P_{k}^{-} H^{T} + R)^{-1}\]</div></div>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\hat{x_{k}} = \hat{x}_{k}^{-} + K_k (z_k - H \hat{x}_{k}^{-})\]</div></div>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[P_k = (I - K_k H) P_{k}^{-}\]</div></div>
+<p>See 2nd and 3rd references to understand notation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -277,7 +287,17 @@ predictions with the observed variable Z at time k.</p>
         
         <div class="related-pages">
           
-          
+          <a class="prev-page" href="kalmanfilter.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">kalmanfilter package</div>
+                
+              </div>
+            </a>
         </div>
 
         <div class="related-information">

@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js">
   <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="API reference" href="api.html" /><link rel="prev" title="Installing" href="install.html" />
 
     <meta name="generator" content="sphinx-3.4.3, furo 2020.12.30.beta24"/>
         <title>Quick Start - kalmanfilter documentation</title>
@@ -41,6 +41,7 @@
     <script defer="defer" src="_static/jquery.js"></script>
     <script defer="defer" src="_static/underscore.js"></script>
     <script defer="defer" src="_static/doctools.js"></script>
+    <script async="async" defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script defer src="_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></head>
   <body dir="">
     
@@ -111,7 +112,18 @@
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form><div class="sidebar-scroll"><div class="sidebar-tree">
-  
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Quick Start</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="kalmanfilter.html">kalmanfilter package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="kalmanfilter._standard.html">kalmanfilter._standard module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
 </div>
 </div>
       </div>
@@ -128,32 +140,40 @@
 <h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>The usage is pretty simple given that parameters are correct:
-.. code-block:: python</p>
-<blockquote>
-<div><p>import os
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt</p>
-<p>from pathlib import Path
-from kalmanfilter import KalmanFilter</p>
-<p>DATA_PATH = Path(os.path.abspath(‘’)).parent / “tests/data”</p>
-<p># read data
-ibex = pd.read_pickle(DATA_PATH / “ibex35.pkl”)</p>
-<p># set the parameters
-Z = ibex[‘Close’].values
-A = np.array([[1]])
-x = np.array([[1]])</p>
-<p>B = np.array([[0]])
-u = np.array([[0]])</p>
-<p>Pk = np.array([[1]])
-Q = 0.005</p>
-<p>H = np.array([[1]])
-R = 0.01</p>
-<p># apply kalman filter
-kf = KalmanFilter(A=A, xk=x, B=B, u=u, Pk=Pk, H=H, Q=Q, R=R)
-states, errors = kf.run_filter(Z)</p>
-</div></blockquote>
+<p>The usage is pretty simple given that parameters are correct:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">kalmanfilter</span> <span class="kn">import</span> <span class="n">KalmanFilter</span>
+
+
+<span class="n">DATA_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">''</span><span class="p">))</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">"tests/data"</span>
+
+<span class="c1"># read data</span>
+<span class="n">ibex</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">DATA_PATH</span> <span class="o">/</span> <span class="s2">"ibex35.pkl"</span><span class="p">)</span>
+
+<span class="c1"># set the parameters</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">ibex</span><span class="p">[</span><span class="s1">'Close'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">xk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">Z</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">Pk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="mf">0.005</span>
+
+<span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">R</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+<span class="c1"># apply kalman filter</span>
+<span class="n">kf</span> <span class="o">=</span> <span class="n">KalmanFilter</span><span class="p">(</span><span class="n">A</span><span class="o">=</span><span class="n">A</span><span class="p">,</span> <span class="n">xk</span><span class="o">=</span><span class="n">xk</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="n">B</span><span class="p">,</span> <span class="n">Pk</span><span class="o">=</span><span class="n">Pk</span><span class="p">,</span> <span class="n">H</span><span class="o">=</span><span class="n">H</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="n">R</span><span class="p">)</span>
+<span class="n">states</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">kf</span><span class="o">.</span><span class="n">run_filter</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">U</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -161,8 +181,26 @@ states, errors = kf.run_filter(Z)</p>
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="api.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">API reference</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="install.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Installing</div>
+                
+              </div>
+            </a>
         </div>
 
         <div class="related-information">
