@@ -142,8 +142,7 @@ stages to model dynamic linear systems:</p>
 </pre></div>
 </div>
 <blockquote>
-<div><p>hat{x}_{k}^{-} = Ahat{x}_{k-1}^{-} + B u_{k-1} \
-P_{k}^{-} = AP_{k-1}A^{T} + Q</p>
+<div><p>hat{x}_{k}^{-} = A hat{x}_{k-1}^{-} + B u_{k-1} P_{k}^{-} = AP_{k-1}A^{T} + Q</p>
 </div></blockquote>
 <p>end{matrix}</p>
 <p>Update step
@@ -152,9 +151,7 @@ P_{k}^{-} = AP_{k-1}A^{T} + Q</p>
 </pre></div>
 </div>
 <blockquote>
-<div><p>K_k = P_{k}^{-} H^{T} (H P_{k}^{-} H^{T} + R)^{-1} \
-hat{x_{k}} = hat{x}_{k}^{-} + K_k (z_k - H hat{x}_{k}^{-})) \
-P_k = (I - K_k H) P_{k}^{-}</p>
+<div><p>K_k = P_{k}^{-} H^{T} (H P_{k}^{-} H^{T} + R)^{-1} hat{x_{k}} = hat{x}_{k}^{-} + K_k (z_k - H hat{x}_{k}^{-})) P_k = (I - K_k H) P_{k}^{-}</p>
 </div></blockquote>
 <p>end{matrix}</p>
 <dl class="field-list simple">

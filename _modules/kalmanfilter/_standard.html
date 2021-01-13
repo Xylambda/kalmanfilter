@@ -130,7 +130,7 @@
 
 
 <div class="viewcode-block" id="KalmanFilter"><a class="viewcode-back" href="../../kalmanfilter._standard.html#kalmanfilter._standard.KalmanFilter">[docs]</a><span class="k">class</span> <span class="nc">KalmanFilter</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">"""Kalman filter.</span>
+    <span class="sd">"""Kalman filter.</span>
 <span class="sd">    </span>
 <span class="sd">    Applies the Kalman filter algorithm. See 2nd and 3rd references to </span>
 <span class="sd">    understand notation.</span>
@@ -141,19 +141,19 @@
 <span class="sd">    Predict step</span>
 <span class="sd">    .. math::</span>
 
-<span class="sd">    \begin{matrix}</span>
-<span class="sd">        \hat{x}_{k}^{-} = A\hat{x}_{k-1}^{-} + B u_{k-1} \\ </span>
+<span class="sd">    \\begin{matrix}</span>
+<span class="sd">        \\hat{x}_{k}^{-} = A \\hat{x}_{k-1}^{-} + B u_{k-1} \\ </span>
 <span class="sd">        P_{k}^{-} = AP_{k-1}A^{T} + Q</span>
-<span class="sd">    \end{matrix}</span>
+<span class="sd">    \\end{matrix}</span>
 
 <span class="sd">    Update step</span>
 <span class="sd">    .. math::</span>
 
-<span class="sd">    \begin{matrix}</span>
+<span class="sd">    \\begin{matrix}</span>
 <span class="sd">        K_k = P_{k}^{-} H^{T} (H P_{k}^{-} H^{T} + R)^{-1} \\ </span>
-<span class="sd">        \hat{x_{k}} = \hat{x}_{k}^{-} + K_k (z_k - H \hat{x}_{k}^{-})) \\ </span>
+<span class="sd">        \\hat{x_{k}} = \\hat{x}_{k}^{-} + K_k (z_k - H \\hat{x}_{k}^{-})) \\ </span>
 <span class="sd">        P_k = (I - K_k H) P_{k}^{-}</span>
-<span class="sd">    \end{matrix}</span>
+<span class="sd">    \\end{matrix}</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
